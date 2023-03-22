@@ -188,12 +188,6 @@ static ALL_BENCHMARKS: &[BenchmarkParam] = &[
     #[cfg(feature = "tls12")]
     BenchmarkParam::new(
         KeyType::Rsa,
-        rustls::cipher_suite::TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
-        &rustls::version::TLS12,
-    ),
-    #[cfg(feature = "tls12")]
-    BenchmarkParam::new(
-        KeyType::Rsa,
         rustls::cipher_suite::TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
         &rustls::version::TLS12,
     ),
@@ -642,14 +636,7 @@ fn selected_tests(mut args: env::Args) {
 
 fn all_tests() {
     for test in ALL_BENCHMARKS.iter() {
-        bench_bulk(test, 1024 * 1024, None);
-        bench_bulk(test, 1024 * 1024, Some(10000));
         bench_handshake(test, ClientAuth::No, Resumption::No);
-        bench_handshake(test, ClientAuth::Yes, Resumption::No);
-        bench_handshake(test, ClientAuth::No, Resumption::SessionID);
-        bench_handshake(test, ClientAuth::Yes, Resumption::SessionID);
-        bench_handshake(test, ClientAuth::No, Resumption::Tickets);
-        bench_handshake(test, ClientAuth::Yes, Resumption::Tickets);
     }
 }
 
