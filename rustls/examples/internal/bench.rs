@@ -399,6 +399,7 @@ fn bench_handshake(params: &BenchmarkParam, clientauth: ClientAuth, resume: Resu
         client_time += time(|| {
             transfer(&mut server, &mut client, None);
         });
+        assert!(!server.is_handshaking() && !client.is_handshaking());
     }
 
     println!(
