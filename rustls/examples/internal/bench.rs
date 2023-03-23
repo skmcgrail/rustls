@@ -415,19 +415,6 @@ fn bench_handshake(params: &BenchmarkParam, clientauth: ClientAuth, resume: Resu
         resume.label(),
         (rounds as f64) / client_time
     );
-    println!(
-        "handshakes\t{:?}\t{:?}\t{:?}\tserver\t{}\t{}\t{:.2}\thandshake/s",
-        params.version,
-        params.key_type,
-        params.ciphersuite.suite(),
-        if clientauth == ClientAuth::Yes {
-            "mutual"
-        } else {
-            "server-auth"
-        },
-        resume.label(),
-        (rounds as f64) / server_time
-    );
 }
 
 fn do_handshake_step(client: &mut ClientConnection, server: &mut ServerConnection) -> bool {
